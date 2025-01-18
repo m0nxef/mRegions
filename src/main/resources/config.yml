@@ -1,0 +1,53 @@
+# Configuration file for Region Plugin
+storage:
+  type: sqlite  # or mysql
+  mysql:
+    host: localhost
+    port: 3306
+    database: minecraft
+    username: root
+    password: ''
+    pool-size: 10
+
+settings:
+  particle-effects: true
+  show-region-titles: true
+
+messages:
+  prefix: '§7[§6Region§7] '
+  region-created: '§aRegion §e%name% §ahas been created!'
+  region-deleted: '§cRegion §e%name% §chas been deleted!'
+  no-permission: '§cYou don''t have permission to do that!'
+  player-added: '§aPlayer §e%player% §ahas been added to region §e%region%§a!'
+  player-removed: '§cPlayer §e%player% §chas been removed from region §e%region%§c!'
+  region-entrance:
+    main: "&e&l%name%"
+    secondary: "&aYou entered a region"
+
+# Region Entrance Settings
+entrance:
+  enabled: true
+  notify:
+    enabled: true
+    enter: "&8[&a→&8] &7You have entered region &e{region}"
+    leave: "&8[&c←&8] &7You have left region &e{region}"
+  title:
+    enabled: true
+    enter:
+      title: "&e{region}"
+      subtitle: "&7Welcome!"
+      fade-in: 10
+      stay: 40
+      fade-out: 10
+    leave:
+      title: "&e{region}"
+      subtitle: "&7Goodbye!"
+      fade-in: 10
+      stay: 40
+      fade-out: 10
+  sound:
+    enabled: true
+    enter: "BLOCK_NOTE_BLOCK_PLING"
+    leave: "BLOCK_NOTE_BLOCK_BASS"
+    volume: 1.0
+    pitch: 1.0

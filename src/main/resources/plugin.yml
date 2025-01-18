@@ -1,0 +1,10 @@
+name: mRegions
+version: '1.0'
+main: org.monxef.mregions.RegionPlugin
+api-version: 1.13
+commands:
+  regions:
+    aliases:
+      - region
+      - mregion
+      - mr
