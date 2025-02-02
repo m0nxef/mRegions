@@ -48,7 +48,7 @@ public class RegionManager {
                 .world(selection.getPos1().getWorld())
                 .pos1(selection.getPos1())
                 .pos2(selection.getPos2())
-                .owner(owner.getUniqueId())
+                .creator(owner.getUniqueId())
                 .whitelist(new HashSet<>())
                 .flags(new HashMap<>())
                 .creationDate(System.currentTimeMillis())

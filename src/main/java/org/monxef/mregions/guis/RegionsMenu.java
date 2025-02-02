@@ -79,7 +79,7 @@ public class RegionsMenu extends FastInv {
         meta.setDisplayName("§b" + region.getName());
 
         List<String> lore = new ArrayList<>();
-        lore.add("§7Owner: §f" + plugin.getServer().getOfflinePlayer(region.getOwner()).getName());
+        lore.add("§7Creator: §f" + plugin.getServer().getOfflinePlayer(region.getCreator()).getName());
         lore.add("§7World: §f" + region.getWorld().getName());
         lore.add("§7Position 1: §f" + formatLocation(region.getPos1()));
         lore.add("§7Position 2: §f" + formatLocation(region.getPos2()));

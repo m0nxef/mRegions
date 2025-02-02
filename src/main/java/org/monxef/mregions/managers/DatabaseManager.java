@@ -79,7 +79,7 @@ public class DatabaseManager {
                              "pos2_x DOUBLE NOT NULL," +
                              "pos2_y DOUBLE NOT NULL," +
                              "pos2_z DOUBLE NOT NULL," +
-                             "owner VARCHAR(36) NOT NULL," +
+                             "creator VARCHAR(36) NOT NULL," +
                              "creation_date BIGINT NOT NULL" +
                              ")"
              )) {
@@ -122,13 +122,13 @@ public class DatabaseManager {
 
     public void saveRegion(Region region) {
         String upsertQuery = usingSQLite ?
-                "INSERT OR REPLACE INTO regions (id, name, world, pos1_x, pos1_y, pos1_z, pos2_x, pos2_y, pos2_z, owner, creation_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)" :
-                "INSERT INTO regions (id, name, world, pos1_x, pos1_y, pos1_z, pos2_x, pos2_y, pos2_z, owner, creation_date) " +
+                "INSERT OR REPLACE INTO regions (id, name, world, pos1_x, pos1_y, pos1_z, pos2_x, pos2_y, pos2_z, creator, creation_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)" :
+                "INSERT INTO regions (id, name, world, pos1_x, pos1_y, pos1_z, pos2_x, pos2_y, pos2_z, creator, creation_date) " +
                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) " +
                         "ON DUPLICATE KEY UPDATE " +
                         "name=VALUES(name), world=VALUES(world), pos1_x=VALUES(pos1_x), pos1_y=VALUES(pos1_y), " +
                         "pos1_z=VALUES(pos1_z), pos2_x=VALUES(pos2_x), pos2_y=VALUES(pos2_y), pos2_z=VALUES(pos2_z), " +
-                        "owner=VALUES(owner)";
+                        "creator=VALUES(creator)";
 
         try (Connection conn = dataSource.getConnection()) {
             conn.setAutoCommit(false);
@@ -144,7 +144,7 @@ public class DatabaseManager {
                     stmt.setDouble(7, region.getPos2().getX());
                     stmt.setDouble(8, region.getPos2().getY());
                     stmt.setDouble(9, region.getPos2().getZ());
-                    stmt.setString(10, region.getOwner().toString());
+                    stmt.setString(10, region.getCreator().toString());
                     stmt.setLong(11, region.getCreationDate());
                     stmt.executeUpdate();
                 }
@@ -227,7 +227,7 @@ public class DatabaseManager {
                                 .world(world)
                                 .pos1(pos1)
                                 .pos2(pos2)
-                                .owner(UUID.fromString(rs.getString("owner")))
+                                .creator(UUID.fromString(rs.getString("creator")))
                                 .creationDate(rs.getLong("creation_date"))
                                 .whitelist(new HashSet<>())
                                 .flags(new HashMap<>())
@@ -303,7 +303,7 @@ public class DatabaseManager {
                                 .world(world)
                                 .pos1(pos1)
                                 .pos2(pos2)
-                                .owner(UUID.fromString(rs.getString("owner")))
+                                .creator(UUID.fromString(rs.getString("creator")))
                                 .creationDate(rs.getLong("creation_date"))
                                 .whitelist(new HashSet<>())
                                 .flags(new HashMap<>())

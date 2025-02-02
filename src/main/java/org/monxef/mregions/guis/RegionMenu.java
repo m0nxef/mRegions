@@ -95,7 +95,7 @@ public class RegionMenu extends FastInv {
                 player.sendMessage("§cYou don't have permission to delete regions!");
                 return;
             }
-            if (!region.getOwner().equals(player.getUniqueId()) && !player.hasPermission("region.admin")) {
+            if (!player.hasPermission("region.admin")) {
                 player.sendMessage("§cYou can only delete your own regions!");
                 return;
             }
@@ -136,7 +136,7 @@ public class RegionMenu extends FastInv {
         meta.setDisplayName("§b§l" + region.getName());
 
         List<String> lore = new ArrayList<>();
-        lore.add("§7Owner: §f" + plugin.getServer().getOfflinePlayer(region.getOwner()).getName());
+        lore.add("§7Creator: §f" + plugin.getServer().getOfflinePlayer(region.getCreator()).getName());
         lore.add("§7World: §f" + region.getWorld().getName());
         lore.add("§7Position 1: §f" + formatLocation(region.getPos1()));
         lore.add("§7Position 2: §f" + formatLocation(region.getPos2()));

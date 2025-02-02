@@ -20,11 +20,11 @@ public class Region {
     private World world;
     private Set<UUID> whitelist;
     private Map<String, Flag.FlagState> flags;
-    private UUID owner;
+    private UUID creator;
     private long creationDate;
 
     public Region(String name, UUID id, Location pos1, Location pos2, World world,
-                  Set<UUID> whitelist, Map<String, Flag.FlagState> flags, UUID owner) {
+                  Set<UUID> whitelist, Map<String, Flag.FlagState> flags, UUID creator) {
         this.name = name;
         this.id = id;
         this.pos1 = pos1;
@@ -32,7 +32,7 @@ public class Region {
         this.world = world;
         this.whitelist = whitelist != null ? whitelist : new HashSet<>();
         this.flags = flags != null ? flags : new HashMap<>();
-        this.owner = owner;
+        this.creator = creator;
         this.creationDate = System.currentTimeMillis();
     }
 
@@ -45,11 +45,6 @@ public class Region {
 
         // Check if player has bypass permission
         if (player.hasPermission("region.bypass")) {
-            return true;
-        }
-
-        // Check owner
-        if (player.getUniqueId().equals(owner)) {
             return true;
         }
 

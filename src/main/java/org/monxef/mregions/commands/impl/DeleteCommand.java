@@ -37,7 +37,7 @@ public class DeleteCommand implements SubCommand {
         String regionName = args[0];
         plugin.getRegionManager().getRegion(regionName).ifPresentOrElse(region -> {
             // Check if player is owner or has admin permission
-            if (!region.getOwner().equals(player.getUniqueId()) && !player.hasPermission("region.admin")) {
+            if (!player.hasPermission("region.admin")) {
                 player.sendMessage(plugin.getConfig().getString("messages.prefix") +
                         "&cYou don't have permission to delete this region!");
                 return;
@@ -60,8 +60,7 @@ public class DeleteCommand implements SubCommand {
         if (args.length == 1) {
             String input = args[0].toLowerCase();
             return plugin.getRegionManager().getRegions().stream()
-                    .filter(region -> region.getOwner().equals(player.getUniqueId()) || 
-                            player.hasPermission("region.admin"))
+                    .filter(region -> player.hasPermission("region.admin"))
                     .map(Region::getName)
                     .filter(name -> name.toLowerCase().startsWith(input))
                     .collect(Collectors.toList());

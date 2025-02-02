@@ -50,7 +50,11 @@ public class RegionCommand implements CommandExecutor, TabCompleter {
         }
 
         Player player = (Player) sender;
-
+        if (!player.hasPermission("region.browse")){
+            player.sendMessage(plugin.getConfig().getString("messages.prefix") +
+                    plugin.getConfig().getString("messages.no-permission"));
+            return true;
+        }
         if (args.length == 0) {
             // Open main menu if no arguments
             plugin.getMenuManager().openRegionsMenu(player);

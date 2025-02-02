@@ -45,7 +45,7 @@ public class RedefineCommand implements SubCommand {
         // Check if region exists
         plugin.getRegionManager().getRegion(regionName).ifPresentOrElse(region -> {
             // Check ownership or admin permission
-            if (!region.getOwner().equals(player.getUniqueId()) && !player.hasPermission("region.admin")) {
+            if (!player.hasPermission("region.admin")) {
                 player.sendMessage("§cYou don't have permission to redefine this region!");
                 return;
             }

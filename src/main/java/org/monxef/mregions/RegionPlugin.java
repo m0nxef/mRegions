@@ -1,5 +1,6 @@
 package org.monxef.mregions;
 
+import fr.mrmicky.fastinv.FastInv;
 import fr.mrmicky.fastinv.FastInvManager;
 import lombok.Getter;
 import org.bukkit.plugin.PluginManager;
@@ -7,6 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.monxef.mregions.commands.RegionCommand;
+import org.monxef.mregions.guis.FlagsMenu;
 import org.monxef.mregions.guis.MenuManager;
 import org.monxef.mregions.listeners.RegionEnterListener;
 import org.monxef.mregions.listeners.RegionListener;
@@ -14,6 +16,7 @@ import org.monxef.mregions.listeners.WandListener;
 import org.monxef.mregions.managers.DatabaseManager;
 import org.monxef.mregions.managers.FlagManager;
 import org.monxef.mregions.managers.RegionManager;
+import org.monxef.mregions.models.Region;
 
 public class RegionPlugin extends JavaPlugin {
 
