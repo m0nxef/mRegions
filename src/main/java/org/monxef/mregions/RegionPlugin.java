@@ -71,9 +71,9 @@ public class RegionPlugin extends JavaPlugin {
 
     private void initializeDatabase() {
         String storageType = getConfig().getString("storage.type", "sqlite").toLowerCase();
-        
+        HikariConfig config = new HikariConfig(); // Create config once
+
         if (storageType.equals("mysql")) {
-            HikariConfig config = new HikariConfig();
             config.setJdbcUrl("jdbc:mysql://" +
                     getConfig().getString("storage.mysql.host", "localhost") + ":" +
                     getConfig().getInt("storage.mysql.port", 3306) + "/" +
@@ -81,28 +81,33 @@ public class RegionPlugin extends JavaPlugin {
             config.setUsername(getConfig().getString("storage.mysql.username", "root"));
             config.setPassword(getConfig().getString("storage.mysql.password", ""));
             config.setMaximumPoolSize(getConfig().getInt("storage.mysql.pool-size", 10));
+            config.setDriverClassName("com.mysql.cj.jdbc.Driver"); // Explicitly set Driver
 
-            databaseManager = new DatabaseManager(this, new HikariDataSource(config));
         } else {
             // SQLite configuration
-            HikariConfig config = new HikariConfig();
             String dbPath = getDataFolder().getAbsolutePath() + "/database.db";
             config.setJdbcUrl("jdbc:sqlite:" + dbPath);
             config.setDriverClassName("org.sqlite.JDBC");
             config.setMaximumPoolSize(1); // SQLite only supports one connection
             config.setConnectionTestQuery("SELECT 1");
-            
-            // SQLite-specific settings
+
+            // SQLite-specific settings (still good to keep)
             config.addDataSourceProperty("cachePrepStmts", "true");
             config.addDataSourceProperty("prepStmtCacheSize", "250");
             config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
 
-            databaseManager = new DatabaseManager(this, new HikariDataSource(config));
         }
-        
-        databaseManager.initializeTables();
-    }
+        config.setConnectionTimeout(5000);
+        config.setIdleTimeout(300000);
+        config.setMaxLifetime(600000);
+        config.setLeakDetectionThreshold(60000);
 
+        databaseManager = new DatabaseManager(this, new HikariDataSource(config));
+
+        // Handle the CompletableFuture returned by initializeTables()
+        databaseManager.initializeTables();
+
+    }
     private void initializeManagers() {
         flagManager = new FlagManager(this);
         regionManager = new RegionManager(this);

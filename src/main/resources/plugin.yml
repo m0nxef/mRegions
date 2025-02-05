@@ -1,5 +1,5 @@
 name: mRegions
-version: '1.1.0'
+version: "1.1.1-BETA"
 main: org.monxef.mregions.RegionPlugin
 api-version: 1.13
 commands:
