@@ -20,7 +20,9 @@ public class RegionManager {
     public void loadRegions() {
         regionCache.clear();
         plugin.getDatabaseManager().loadAllRegions()
-                .forEach(region -> regionCache.put(region.getName().toLowerCase(), region));
+                .thenAccept(regions -> {
+                    regions.forEach(region -> regionCache.put(region.getName().toLowerCase(), region));
+                });
     }
 
     public Optional<Region> getRegion(String name) {
